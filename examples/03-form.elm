@@ -61,8 +61,8 @@ view model =
     [ viewInput "text" "Name" model.name Name
     , viewInput "password" "Password" model.password Password
     , viewInput "password" "Re-enter Password" model.passwordAgain PasswordAgain
-    , viewValidation model
-    , checkPasswordLength model
+    , validatePasswords model
+    , validatePasswordLength model
     ]
 
 
@@ -71,15 +71,15 @@ viewInput t p v toMsg =
   input [ type_ t, placeholder p, value v, onInput toMsg ] []
 
 
-viewValidation : Model -> Html msg
-viewValidation model =
+validatePasswords : Model -> Html msg
+validatePasswords model =
   if model.password == model.passwordAgain then
     div [ style "color" "green" ] [ text "OK. Passwords match." ]
   else
     div [ style "color" "red" ] [ text "Passwords do not match!" ]
 
-checkPasswordLength : Model -> Html msg
-checkPasswordLength model =
+validatePasswordLength : Model -> Html msg
+validatePasswordLength model =
   if String.length model.password > 8 then
     div [ style "color" "green" ] [ text "OK. Password is long enough." ]
   else
