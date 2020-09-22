@@ -63,6 +63,7 @@ view model =
     , viewInput "password" "Re-enter Password" model.passwordAgain PasswordAgain
     , validatePasswords model
     , validatePasswordLength model
+    , validatePasswordCharType model
     ]
 
 
@@ -84,3 +85,10 @@ validatePasswordLength model =
     div [ style "color" "green" ] [ text "OK. Password is long enough." ]
   else
     div [ style "color" "red" ] [ text "Password should have more than 8 characters!" ]
+
+validatePasswordCharType : Model -> Html msg
+validatePasswordCharType model =
+  if String.any Char.isDigit model.password && String.any Char.isLower model.password && String.any Char.isUpper model.password then
+    div [ style "color" "green" ] [ text "OK. Password contains upper case, lower case and numbers." ]
+  else
+    div [ style "color" "red" ] [ text "Password should contain upper case, lower case and numbers!" ]
